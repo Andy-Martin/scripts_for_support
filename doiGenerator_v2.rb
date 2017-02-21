@@ -5,7 +5,8 @@ border("#ece4b7",
         strokewidth: 6)
 
   stack(margin_left:10) do
-    para "This little app will put all the chapter DDS IDs for a given book on your clipboard so you can paste them somewhere."
+    @description = banner "This little app will put all the chapter DDS IDs for a given book on your clipboard so you can paste them somewhere."
+    @description.style :size => 14
   end
 
   stack(margin_left: 40) do
