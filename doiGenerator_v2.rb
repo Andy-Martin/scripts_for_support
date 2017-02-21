@@ -13,18 +13,18 @@ border("#ece4b7",
     para "Enter book DOI: "
     @book_doi = edit_line
     }
-   flow {
+  flow {
     para "Enter number of chapters: "
     @numChap = edit_line :width => 40
-    } 
+  } 
 
   @contents = para "DDS IDs will appear here."
 
   end
 
   stack(margin_left: 40, width: 80) do
-flow {
-    button "Go" do
+    flow {
+      button "Go" do
     
 # checking the text boxes have something in them
     if @book_doi.text.length == 0
@@ -36,14 +36,14 @@ flow {
       else
 
         i = 0
-    idArray = []
+        idArray = []
 
-    loop do
-      i += 1
-      idArray.push("\"chp:#{@book_doi.text}_#{i}\"")
-      if i == (@numChap.text.to_i - 1)
-        break
-      end
+        loop do
+          i += 1
+          idArray.push("\"chp:#{@book_doi.text}_#{i}\"")
+          if i == (@numChap.text.to_i - 1)
+          break
+        end
     end
   end
 
@@ -55,15 +55,12 @@ flow {
 }
     flow {
       button("Clear").click do
-      if @contents.text == "Cleared!"
-        break
-      else
-    @contents.text = para "Cleared!" 
+        if @contents.text == "Cleared!"
+          break
+          else
+          @contents.text = para "Cleared!" 
+        end
+      end
+    }
   end
-  end
-  }
 end
-end
-
-
-
