@@ -28,10 +28,10 @@ border("#ece4b7",
     
 # checking the text boxes have something in them
     if @book_doi.text.length == 0
-      alert "please enter a DOI"
+      alert("Please enter a DOI.", :title => "Idiot!")
 
     elsif @numChap.text.length == 0
-        alert "please enter a the number of chapters"
+        alert("Please enter the number of chapters.", :title => "You Fool!")
 
       else
 
@@ -50,7 +50,7 @@ border("#ece4b7",
     @contents.text = idArray.join(", ");
  
       self.clipboard = @contents.text
-      alert "DDS IDs for #{@book_doi.text} have been placed on your clipboard."
+      alert("DDS IDs for #{@book_doi.text} have been placed on your clipboard.", :title => nil)
    end
 }
     flow {
