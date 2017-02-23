@@ -12,11 +12,15 @@ border("#ece4b7",
   stack(margin_left: 40) do
     flow {
     para "Enter book DOI: "
-    @book_doi = edit_line
+    @input_doi = edit_line do |e|
+      @book_doi = @input_doi.text
+    end
     }
   flow {
     para "Enter number of chapters: "
-    @numChap = edit_line :width => 40
+    @input_chap = edit_line :width => 40 do |x|
+     @numChap = @input_chap.text
+   end
   } 
 
   @contents = para "DDS IDs will appear here."
@@ -28,10 +32,10 @@ border("#ece4b7",
       button "Go" do
     
 # checking the text boxes have something in them
-    if @book_doi.text.length == 0
+    if @book_doi.length == 0
       alert("Please enter a DOI.", :title => "Idiot!")
 
-    elsif @numChap.text.length == 0
+    elsif @numChap.length == 0
         alert("Please enter the number of chapters.", :title => "You Fool!")
 
       else
@@ -41,8 +45,8 @@ border("#ece4b7",
 
         loop do
           i += 1
-          idArray.push("\"chp:#{@book_doi.text}_#{i}\"")
-          if i == (@numChap.text.to_i - 1)
+          idArray.push("\"chp:#{@book_doi}_#{i}\"")
+          if i == (@numChap.to_i - 1)
           break
         end
     end
@@ -61,10 +65,10 @@ border("#ece4b7",
           break
           else
           @contents.text = para "DDS IDs will appear here."
-          @numChap.text.clear 
-          @numChap.text("")
-          @book_doi.text.clear
-          @book_doi.text("")
+          @numChap = @input_chap.text.clear 
+          @input_chap.text = ""
+          @book_doi = @input_doi.text.clear
+          @input_doi.text = ""
         end
       end
     }
