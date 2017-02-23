@@ -56,10 +56,15 @@ border("#ece4b7",
 }
     flow {
       button("Clear").click do
-        if @contents.text == "Cleared!"
+        if @contents.text == "DDS IDs will appear here."
+          alert("Nothing to clear.")
           break
           else
-          @contents.text = para "Cleared!" 
+          @contents.text = para "DDS IDs will appear here."
+          @numChap.text.clear 
+          @numChap.text("")
+          @book_doi.text.clear
+          @book_doi.text("")
         end
       end
     }
