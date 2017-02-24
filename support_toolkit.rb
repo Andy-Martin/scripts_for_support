@@ -1,12 +1,12 @@
-Shoes.app :title => "Support guys toolkit", :width => 1000 do 
+Shoes.app :title => "Support Guys Toolkit", :width => 1000 do 
 background "#dff5fc".."#6677cd"
 border("#ece4b7",
         strokewidth: 6) 
 
-
+flow(:width => 500) {
 
   stack(margin_left:10) do
-    @description = banner "This little app will put all the chapter DDS IDs for a given book on your clipboard so you can paste them somewhere."
+    @description = banner "This will turn a given book DOI into chapter DDS IDs for a given number of chapters"
     @description.style :size => 14
   end
 
@@ -23,13 +23,15 @@ border("#ece4b7",
      @numChap = @input_chap.text
    end
   } 
+end
 
+stack(:margin_left =>10) do
   @contents = para "DDS IDs will appear here."
+end
+ 
 
-  end
-
-  stack(margin_left: 40, width: 80) do
-    flow {
+  stack(margin_left: 10, width: 80) do
+    flow(:width => 450) {
       button "Go" do
     
 # checking the text boxes have something in them
@@ -58,8 +60,7 @@ border("#ece4b7",
       self.clipboard = @contents.text
       alert("DDS IDs for #{@book_doi.text} have been placed on your clipboard.", :title => nil)
    end
-}
-    flow {
+
       button("Clear").click do
         if @contents.text == "DDS IDs will appear here."
           alert("Nothing to clear.")
@@ -74,24 +75,35 @@ border("#ece4b7",
       end
     }
   end
-  stack do
-	@description = banner "This will turn Article DOIs into Article DDS IDs."
-    @description.style :size => 14
-end
+#end of flow
+}
 
-stack do
-	para "Enter Article DOIs: "
-end
+flow(:width => 500) {
 
-
-	@edit_box = edit_box :width => 300, :height => 300 do |e|
-		@art_dois = @edit_box.text
+	stack(margin_left:10, :width => 475) do
+		@description = banner "This will turn Article DOIs into Article DDS IDs."
+    	@description.style :size => 14
 	end
 
+stack(margin_left: 40) do
 
+	flow(:width => 460) {
+		para "Enter Article DOIs: "
+
+
+
+		@edit_box = edit_box :width => 250, :height => 300 do |e|
+		@art_dois = @edit_box.text
+		end
+	}
+end
+
+stack do 
 art_dds_ids = para "DDS IDs will appear here"
+end
 
-
+stack do 
+	flow(:width => 500) { 
 	button "Go" do
 		if @art_dois.length == 0
 			alert("Please enter at least one DOI.", :title => "Idiot!")
@@ -107,8 +119,9 @@ art_dds_ids = para "DDS IDs will appear here"
       		alert("DDS IDs for your DOIs have been placed on your clipboard.", :title => nil)
 		end
 
+	
 	end
-
+	 
 	button "Clear" do
 		if art_dds_ids.text == "DDS IDs will appear here"
 			alert("Nothing to clear")
@@ -119,4 +132,8 @@ art_dds_ids = para "DDS IDs will appear here"
 		@edit_box.text = ""
 	end
 	end
+	}
+end
+#end of second flow
+}
 end
