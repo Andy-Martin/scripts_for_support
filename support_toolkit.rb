@@ -5,7 +5,7 @@ border("#ece4b7",
 
 flow(:width => 500) {
 
-  stack(margin_left:10) do
+  stack(:margin_left => 10, :width => 480) do
     @description = banner "This will turn a given book DOI into chapter DDS IDs for a given number of chapters"
     @description.style :size => 14
   end
@@ -32,13 +32,14 @@ end
 
   stack(margin_left: 10, width: 80) do
     flow(:width => 450) {
-      button "Go" do
+     @bookGo = button "Go" do
     
 # checking the text boxes have something in them
-    if @book_doi.length == 0
+    if @book_doi.to_s.length == 0
       alert("Please enter a DOI.", :title => "Idiot!")
+    
 
-    elsif @numChap.length == 0
+    elsif @numChap.to_s.length == 0
         alert("Please enter the number of chapters.", :title => "You Fool!")
 
       else
@@ -56,15 +57,14 @@ end
   end
 
     @contents.text = idArray.join(", ");
- 
       self.clipboard = @contents.text
-      alert("DDS IDs for #{@book_doi.text} have been placed on your clipboard.", :title => nil)
+        alert("DDS IDs for #{@book_doi.text} have been placed on your clipboard.", :title => nil)
    end
 
-      button("Clear").click do
+      @bookClear = button("Clear").click do
         if @contents.text == "DDS IDs will appear here."
           alert("Nothing to clear.")
-          break
+          
           else
           @contents.text = para "DDS IDs will appear here."
           @numChap = @input_chap.text.clear 
@@ -80,59 +80,59 @@ end
 
 flow(:width => 500) {
 
-	stack(margin_left:10, :width => 475) do
-		@description = banner "This will turn Article DOIs into Article DDS IDs."
-    	@description.style :size => 14
-	end
+  stack(margin_left:10, :width => 475) do
+    @description = banner "This will turn Article DOIs into Article DDS IDs."
+      @description.style :size => 14
+  end
 
 stack(margin_left: 40) do
 
-	flow(:width => 460) {
-		para "Enter Article DOIs: "
+  flow(:width => 460) {
+    para "Enter Article DOIs: "
 
 
 
-		@edit_box = edit_box :width => 250, :height => 300 do |e|
-		@art_dois = @edit_box.text
-		end
-	}
+    @edit_box = edit_box :width => 250, :height => 300 do |y|
+    @art_dois = @edit_box.text
+    end
+  }
 end
 
 stack do 
-art_dds_ids = para "DDS IDs will appear here"
+@art_dds_ids = para "DDS IDs will appear here."
 end
 
 stack do 
-	flow(:width => 500) { 
-	button "Go" do
-		if @art_dois.length == 0
-			alert("Please enter at least one DOI.", :title => "Idiot!")
-		else
-			
-			doiArray = @art_dois.split("\n").to_a
-			doiArray.map! do |single_doi|
-				single_doi = "\"art:#{single_doi.gsub(/[\s,]/ ,"")}\""
-			end
+  flow(:width => 500) { 
+  button "Go" do
+    if @art_dois.to_s.length == 0
+      alert("Please enter at least one DOI.", :title => "Idiot!")
+    else
+      
+      doiArray = @art_dois.split("\n").to_a
+      doiArray.map! do |single_doi|
+        single_doi = "\"art:#{single_doi.gsub(/[\s,]/ ,"")}\""
+      end
 
-			art_dds_ids.text = doiArray.join(", "); 
-			self.clipboard = art_dds_ids.text
-      		alert("DDS IDs for your DOIs have been placed on your clipboard.", :title => nil)
-		end
+      @art_dds_ids.text = doiArray.join(", "); 
+      self.clipboard = @art_dds_ids.to_s
+          alert("DDS IDs for your DOIs have been placed on your clipboard.", :title => nil)
+    end
 
-	
-	end
-	 
-	button "Clear" do
-		if art_dds_ids.text == "DDS IDs will appear here"
-			alert("Nothing to clear")
-			break
-		else
-		art_dds_ids.text = para "DDS IDs will appear here"
-		@art_dois = @edit_box.text.clear
-		@edit_box.text = ""
-	end
-	end
-	}
+  
+  end
+   
+  @artClear = button("Clear").click do
+        if @art_dds_ids.to_s == "DDS IDs will appear here."
+          alert("Nothing to clear.")
+      
+    else
+    @art_dds_ids = para "DDS IDs will appear here"
+    @art_dois = @edit_box.to_s.clear
+    @edit_box.text = ""
+  end
+  end
+  }
 end
 #end of second flow
 }
