@@ -42,6 +42,11 @@ end
     elsif @numChap.to_s.length == 0
         alert("Please enter the number of chapters.", :title => "You Fool!")
 
+      elsif @numChap.to_i == 1
+        alert("A book should really have more than one chapter, but I've added 1 chapter DDS ID to your clipboard anyway.", :title => "You've probably done something wrong")
+        self.clipboard = "\"chp:#{@book_doi}_1\""
+          
+
       else
 
         i = 0
