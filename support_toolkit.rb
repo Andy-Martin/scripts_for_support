@@ -25,7 +25,7 @@ flow(:width => 500) {
   } 
 end
 
-stack(:margin_left =>10) do
+stack(:margin_left =>10).hide do
   @contents = para "DDS IDs will appear here."
 end
  
@@ -54,19 +54,20 @@ end
           break
         end
     end
-  end
+  
 
-    @contents.text = idArray.join(", ");
-      self.clipboard = @contents.text
-        alert("DDS IDs for #{@book_doi.text} have been placed on your clipboard.", :title => nil)
+    @contents = idArray.join(", ");
+      self.clipboard = @contents
+        alert("DDS IDs for #{@book_doi.to_s} have been placed on your clipboard.", :title => nil)
+      end
    end
 
       @bookClear = button("Clear").click do
-        if @contents.text == "DDS IDs will appear here."
+        if @contents.to_s == "DDS IDs will appear here."
           alert("Nothing to clear.")
           
           else
-          @contents.text = para "DDS IDs will appear here."
+          @contents = para "DDS IDs will appear here."
           @numChap = @input_chap.text.clear 
           @input_chap.text = ""
           @book_doi = @input_doi.text.clear
@@ -98,7 +99,7 @@ stack(margin_left: 40) do
   }
 end
 
-stack do 
+stack.hide do 
 @art_dds_ids = para "DDS IDs will appear here."
 end
 
@@ -107,14 +108,13 @@ stack do
   button "Go" do
     if @art_dois.to_s.length == 0
       alert("Please enter at least one DOI.", :title => "Idiot!")
-    else
-      
+      else
       doiArray = @art_dois.split("\n").to_a
-      doiArray.map! do |single_doi|
+        doiArray.map! do |single_doi|
         single_doi = "\"art:#{single_doi.gsub(/[\s,]/ ,"")}\""
-      end
+        end
 
-      @art_dds_ids.text = doiArray.join(", "); 
+      @art_dds_ids = doiArray.join(", "); 
       self.clipboard = @art_dds_ids.to_s
           alert("DDS IDs for your DOIs have been placed on your clipboard.", :title => nil)
     end
@@ -122,16 +122,16 @@ stack do
   
   end
    
-  @artClear = button("Clear").click do
+    @artClear = button("Clear").click do
         if @art_dds_ids.to_s == "DDS IDs will appear here."
           alert("Nothing to clear.")
       
-    else
-    @art_dds_ids = para "DDS IDs will appear here"
-    @art_dois = @edit_box.to_s.clear
-    @edit_box.text = ""
-  end
-  end
+          else
+          @art_dds_ids = para "DDS IDs will appear here."
+          @art_dois = @edit_box.to_s.clear
+          @edit_box.text = ""
+        end
+    end
   }
 end
 #end of second flow
