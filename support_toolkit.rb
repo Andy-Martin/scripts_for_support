@@ -55,7 +55,7 @@ end
         loop do
           i += 1
           idArray.push("\"chp:#{@book_doi}_#{i}\"")
-          if i == (@numChap.to_i - 1)
+          if i == (@numChap.to_i)
           break
         end
     end
@@ -69,7 +69,7 @@ end
 
       @bookClear = button("Clear").click do
         if @contents.to_s == "DDS IDs will appear here."
-          alert("Nothing to clear.")
+          alert("Nothing to clear.", :title => nil)
           
           else
           @contents = "DDS IDs will appear here."
@@ -136,7 +136,7 @@ stack do
    
     @artClear = button("Clear").click do
         if @art_dds_ids.to_s == "DDS IDs will appear here."
-          alert("Nothing to clear.")
+          alert("Nothing to clear.", :title => nil)
       
           else
           @art_dds_ids = "DDS IDs will appear here."
