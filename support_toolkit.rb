@@ -1,11 +1,11 @@
-Shoes.app :title => "Support Guys Toolkit", :width => 1005 do 
+Shoes.app :title => "Support Guys Toolkit", :width => 1000 do 
 background "#dfe3f7".."#b7bfec"
 border(black,
         strokewidth: 4) 
 
-flow(:width => 500) {
+flow(:width => 498) {
 
-  stack(:margin_left => 10, :width => 480) do
+  stack(:margin_left => 10, :margin_top => 10, :width => 480) do
     @description = banner "This will turn a given book DOI into chapter DDS IDs for a given number of chapters"
     @description.style :size => 14
   end
@@ -26,7 +26,7 @@ flow(:width => 500) {
 end
 
 stack(:margin_left =>10) do
-  @contents = para "DDS IDs will appear here."
+  @contents = "DDS IDs will appear here."
 end
  
 
@@ -83,16 +83,17 @@ end
   end
 #end of flow
 }
-flow(:width => 5, :height => 1.0) do
+#central border
+flow(:width => 4, :height => 1.0) do
   border(black,
         strokewidth: 4)
 end
 
 
-flow(:width => 500) {
+flow(:width => 498) {
 
 
-  stack(margin_left:10, :width => 475) do
+  stack(margin_left:10, margin_top:10, :width => 475) do
     @description = banner "This will turn Article DOIs into Article DDS IDs."
       @description.style :size => 14
   end
@@ -111,7 +112,7 @@ stack(margin_left: 40) do
 end
 
 stack do 
-@art_dds_ids = para "DDS IDs will appear here."
+@art_dds_ids = "DDS IDs will appear here."
 end
 
 stack do 
