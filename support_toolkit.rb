@@ -93,19 +93,21 @@ end
 flow(:width => 498) {
 
 
-  stack(margin_left:10, margin_top:10, :width => 475) do
-    @description = banner "This will turn Article DOIs into Article DDS IDs."
+stack(margin_left:10, margin_top:10, :width => 475) do
+    @description = banner "This will turn a list of DOIs into DDS IDs."
       @description.style :size => 14
+      list_box items: ["Article", "Chapter", "Book"],
+     width: 120, choose: "Article" do |list|
+       @type.text = para "Enter #{list.text} DOIs: "
+   end
+   
   end
 
 stack(margin_left: 40) do
 
   flow(:width => 460) {
-    para "Enter Article DOIs: "
-
-
-
-    @edit_box = edit_box :width => 250, :height => 300 do |y|
+    @type = para "Enter Article DOIs: "
+    @edit_box = edit_box :width => 250, :height => 300, :right => 50 do |y|
     @art_dois = @edit_box.text
     end
   }
@@ -120,6 +122,29 @@ stack do
   button "Go" do
     if @art_dois.to_s.length == 0
       alert("Please enter at least one DOI.", :title => "Idiot!")
+      
+      elsif @type.to_s == "Enter Chapter DOIs: "
+        doiArray = @art_dois.split("\n").to_a
+        doiArray.map! do |single_doi|
+        single_doi = "\"chp:#{single_doi.gsub(/[\s,]/ ,"")}\""
+        end
+
+      @art_dds_ids = doiArray.join(", "); 
+      self.clipboard = @art_dds_ids.to_s
+          alert("DDS IDs for your Chapter DOIs have been placed on your clipboard.", :title => nil)
+
+# Note: these book DDSids are not correct! for books you need to strip out the publisher prefix in the doi
+#TODO: use regex to check and get rid of prefix
+      elsif @type.to_s == "Enter Book DOIs: "
+          doiArray = @art_dois.split("\n").to_a
+        doiArray.map! do |single_doi|
+        single_doi = "\"bok:#{single_doi.gsub(/[\s,]/ ,"")}\""
+        end
+
+      @art_dds_ids = doiArray.join(", "); 
+      self.clipboard = @art_dds_ids.to_s
+          alert("DDS IDs for your Book DOIs have been placed on your clipboard.", :title => nil)
+        
       else
       doiArray = @art_dois.split("\n").to_a
         doiArray.map! do |single_doi|
@@ -128,7 +153,7 @@ stack do
 
       @art_dds_ids = doiArray.join(", "); 
       self.clipboard = @art_dds_ids.to_s
-          alert("DDS IDs for your DOIs have been placed on your clipboard.", :title => nil)
+          alert("DDS IDs for your Article DOIs have been placed on your clipboard.", :title => nil)
     end
 
   
