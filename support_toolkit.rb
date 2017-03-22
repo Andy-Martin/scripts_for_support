@@ -1,4 +1,4 @@
-Shoes.app :title => "Support Guys Toolkit", :width => 1000 do 
+Shoes.app :title => "Support Guys Toolkit", :width => 1000, :height => 500 do 
 background "#dfe3f7".."#b7bfec"
 border(black,
         strokewidth: 4) 
@@ -10,12 +10,12 @@ flow(:width => 498) {
     @description.style :size => 14
   end
 
-  stack(margin_left: 40) do
+  stack(margin_left: 80, margin_top: 30) do
     flow {
-    para "Enter book DOI: "
-    @input_doi = edit_line do |e|
-      @book_doi = @input_doi.text
-    end
+      para "Enter book DOI: "
+        @input_doi = edit_line do |e|
+        @book_doi = @input_doi.text
+        end
     }
   flow {
     para "Enter number of chapters: "
@@ -30,7 +30,7 @@ stack(:margin_left =>10) do
 end
  
 
-  stack(margin_left: 10, width: 80) do
+  stack(margin_left: 30, margin_top: 20, width: 80) do
     flow(:width => 450) {
      @bookGo = button "Go" do
     
@@ -94,19 +94,23 @@ flow(:width => 498) {
 
 
 stack(margin_left:10, margin_top:10, :width => 475) do
-    @description = banner "This will turn a list of DOIs into DDS IDs."
+    @description = banner "This will turn a list of article or chapter DOIs into DDS IDs."
       @description.style :size => 14
-      list_box items: ["Article", "Chapter", "Book"],
+      end
+
+      stack(margin_left:75) do 
+        list_box items: ["Article", "Chapter"],
      width: 120, choose: "Article" do |list|
-       @type.text = para "Enter #{list.text} DOIs: "
+       @type.text =  "Enter #{list.text} DOIs: "
    end
    
   end
 
-stack(margin_left: 40) do
+stack(margin_left: 40, margin_top:20) do
 
   flow(:width => 460) {
     @type = para "Enter Article DOIs: "
+    
     @edit_box = edit_box :width => 250, :height => 300, :right => 50 do |y|
     @art_dois = @edit_box.text
     end
@@ -117,7 +121,7 @@ stack do
 @art_dds_ids = "DDS IDs will appear here."
 end
 
-stack do 
+stack(margin_left:30) do 
   flow(:width => 500) { 
   button "Go" do
     if @art_dois.to_s.length == 0
@@ -133,17 +137,22 @@ stack do
       self.clipboard = @art_dds_ids.to_s
           alert("DDS IDs for your Chapter DOIs have been placed on your clipboard.", :title => nil)
 
-# Note: these book DDSids are not correct! for books you need to strip out the publisher prefix in the doi
-#TODO: use regex to check and get rid of prefix
-      elsif @type.to_s == "Enter Book DOIs: "
-          doiArray = @art_dois.split("\n").to_a
-        doiArray.map! do |single_doi|
-        single_doi = "\"bok:#{single_doi.gsub(/[\s,]/ ,"")}\""
-        end
+# Note: these book DDSids are not correct! For books you need to strip out the publisher prefix in the doi
+# TODO: use regex to check and get rid of prefix
 
-      @art_dds_ids = doiArray.join(", "); 
-      self.clipboard = @art_dds_ids.to_s
-          alert("DDS IDs for your Book DOIs have been placed on your clipboard.", :title => nil)
+=begin 
+     
+     elsif @type.to_s == "Enter Book DOIs: "
+         doiArray = @art_dois.split("\n").to_a
+       doiArray.map! do |single_doi|
+       single_doi = "\"bok:#{single_doi.gsub(/[\s,]/ ,"")}\""
+       end
+
+     @art_dds_ids = doiArray.join(", "); 
+     self.clipboard = @art_dds_ids.to_s
+         alert("DDS IDs for your Book DOIs have been placed on your clipboard.", :title => nil)
+
+=end
         
       else
       doiArray = @art_dois.split("\n").to_a
