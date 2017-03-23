@@ -2,7 +2,7 @@ Shoes.app :title => "Support Guys Toolkit", :width => 1000, :height => 500 do
 background "#dfe3f7".."#b7bfec"
 border(black,
         strokewidth: 4) 
-
+# This flow contains the entire left side of the window - this contains the book to chapter function
 flow(:width => 498) {
 
   stack(:margin_left => 10, :margin_top => 10, :width => 480) do
@@ -10,6 +10,7 @@ flow(:width => 498) {
     @description.style :size => 14
   end
 
+# Here are input boxes
   stack(margin_left: 80, margin_top: 30) do
     flow {
       para "Enter book DOI: "
@@ -46,7 +47,7 @@ end
         alert("A book should really have more than one chapter, but I've added 1 chapter DDS ID to your clipboard anyway.", :title => "You've probably done something wrong")
         self.clipboard = "\"chp:#{@book_doi}_1\""
           
-
+# Builds the array of chapter DDS ids
       else
 
         i = 0
@@ -60,13 +61,14 @@ end
         end
     end
   
-
+# Joins the array and alert message to tell user the operation is complete
     @contents = idArray.join(", ");
       self.clipboard = @contents
         alert("DDS IDs for #{@book_doi.to_s} have been placed on your clipboard.", :title => nil)
       end
    end
 
+# Clears the text boxes and the array
       @bookClear = button("Clear").click do
         if @contents.to_s == "DDS IDs will appear here."
           alert("Nothing to clear.", :title => nil)
@@ -89,7 +91,7 @@ flow(:width => 4, :height => 1.0) do
         strokewidth: 4)
 end
 
-
+# This flow contains the entire right side of the window - this contains the article/chapter to DDS id function
 flow(:width => 498) {
 
 
